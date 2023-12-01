@@ -26,7 +26,7 @@ class ListingContent extends Model
      */
     protected $table = 'listing_contents';
 
-    protected $fillable = array('listings_id', 'meida_type', 'media_id', 'icon', 'title', 'description', 'priority');
+    protected $fillable = array('listings_id', 'meida_type', 'media_id', 'icon', 'title', 'description','link', 'priority');
 
     protected $dates = ['created_at','updated_at'];
 

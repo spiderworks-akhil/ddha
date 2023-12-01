@@ -1,4 +1,7 @@
 @extends('ui.base')
+@section('metadata')
+<x-meta-data :details="$page_details" />
+@endsection
 @section('head')
 <style>
   .foot-element {
@@ -571,7 +574,8 @@
         <h3>Our Success Stories </h3>
         <h4>We at Dehradun Hills Academy have served hundreds of happy families for the past 30+ years across India and
           <br />
-          the world including S.E Asia. Sharing a glimpse of how are Alumni's are placed.</h4>
+          the world including S.E Asia. Sharing a glimpse of how are Alumni's are placed.
+        </h4>
       </div>
     </div>
 

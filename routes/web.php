@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Ui\MainController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -15,30 +17,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/', function () {
-    return view('ui.pages.index');
-}); 
-Route::get('/about', function () {
-    return view('ui.pages.about');
-});
+
+Route::get('/', [MainController::class, 'index'])->name('index');
+Route::get('/about', [MainController::class, 'about'])->name('about');
+Route::get('/why', [MainController::class, 'why_ddha'])->name('why');
+Route::get('/learning', [MainController::class, 'learning'])->name('learning');
+Route::get('/personalized', [MainController::class, 'personalized'])->name('personalized');
+Route::get('/organic', [MainController::class, 'organic'])->name('organic');
+Route::get('/benefits', [MainController::class, 'benefits'])->name('benefits');
+
+
 Route::get('/contact', function () {
     return view('ui.pages.contact');
 });
-Route::get('/why', function () {
-    return view('ui.pages.why');
-}); 
-Route::get('/learning', function () {
-    return view('ui.pages.learning');
-}); 
-Route::get('/personalized', function () {
-    return view('ui.pages.personalized');
-}); 
-Route::get('/organic', function () {
-    return view('ui.pages.organic');
-}); 
-Route::get('/benefits', function () {
-    return view('ui.pages.benefits');
-});  
 
 Route::get('/blog', function () {
     return view('ui.pages.blog');
@@ -105,3 +96,4 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/admin.php';
+Route::get('{slug?}', [MainController::class, 'dynamic'])->where('slug', '(.*)')->name('dynamic');

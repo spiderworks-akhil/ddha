@@ -1,12 +1,11 @@
 @extends('ui.base')
+@section('metadata')
+<x-meta-data :details="$page_details" />
+@endsection
 @section('head')
 <style>
-
 </style>
 @endsection
-
-
-
 
 
 @section('content')
@@ -20,30 +19,14 @@
     <div class="container">
         <div class="row d-flex align-items-center ">
             <div class="col-md-5">
-                <img src="{{asset('assets/img/learning-banner.jpg')}}" class="img-fluid w-100" />
+                @if ($page_details->featured_image->file_path)
+                <img src="{{asset($page_details->featured_image->file_path)}}" class="img-fluid w-100" />
+                @endif
             </div>
             <div class="col-md-7">
                 <div class="about-text-cntr clor-1">
-                    <span>Learning </span>
-                    <h3> Learning outside the classroom</h3>
-                    <p>(LOCR) is a program being offered to all the children residing in the boarding consists of two
-                        parts – one part will
-                        be conducted on the campus between 3pm to 4.30pm on a daily basis and the other will cover parts
-                        of the valley
-                        and will be conducted on Saturdays-Sundays and other holidays. This part may include journey by
-                        foot, cycle, bus
-                        or train and an overnight stay in Tents/FRH. </p>
-                    <p> Education is pretty broad concept that surpasses the four walls of a classroom. The core aim of
-                        education is to
-                        foster all round development of a child. All round development essentially means intellectual,
-                        physical, moral,
-                        sensible and social development, which will take place through LOCR. </p>
-
-                    <p> A Chinese proverb very aptly states, “Teach me and I will forget. Show me, and I might remember.
-                        Involve me,
-                        and I will never forget.” To a very great extent, the theoretical knowledge is enhanced when a
-                        co-curricular
-                        activity related to the content taught, is organized. </p>
+                    <h3>{{$page_details->title}}</h3>
+                    {!!$page_details->content!!}
 
                 </div>
             </div>
@@ -51,46 +34,27 @@
     </div>
 </section>
 
+@php
+$_first_item = $page_details->children->first();
+$img = asset($_first_item->featured_image->file_path);
+$content = str_replace('<ul>','<div class="row ">',$_first_item->content);
+        $content = str_replace('</ul>','</div>',$content);
+$content = str_replace('<li>','<div class="col-md-3">
+        <h4>',$content);
+            $content = str_replace('</li>','</h4>
+</div>',$content);
 
+@endphp
 
-<section class=" co-curricular_activities">
+<section class=" co-curricular_activities" style="background-image: url('{{$img}}') !important;">
     <div class="container">
         <div class="row ">
             <div class="col-md-12">
-                <h3>Co-curricular activities render <br /> a number of values like:</h3>
+                <h3>{!!$_first_item->title!!}</h3>
             </div>
         </div>
 
-        <div class="row ">
-            <div class="col-md-3">
-                <h4>Education Values</h4>
-            </div>
-            <div class="col-md-3">
-                <h4>Psychological Values</h4>
-            </div>
-            <div class="col-md-3">
-                <h4>Development of Social Values</h4>
-            </div>
-            <div class="col-md-3">
-                <h4>Development of Civic Values</h4>
-            </div>
-            <div class="col-md-3">
-                <h4>Physical Developm ent Values</h4>
-            </div>
-            <div class="col-md-3">
-                <h4>Recreational Values</h4>
-            </div>
-            <div class="col-md-3">
-                <h4>Cultural Values</h4>
-            </div>
-
-
-
-
-        </div>
-
-
-
+        {!!$content!!}
 
     </div>
 </section>
@@ -111,120 +75,45 @@
             </div>
         </div>
 
+        @if (count($page_details->children->skip(1))>0)
+        @php
+        $i=0;
+        $c=1;
+        @endphp
+        @foreach ($page_details->children->skip(1) as $item)
 
         <div class="row mb-3  ">
-            <div class="col-md-6 left-dark-clr d-flex align-items-center">
-                <div>
-                    <h4> Over-all Personality:</h4>
-                    <p> It helps to enhance the all-round personality of the students to strongly face the turbulent
-                        road of the
-                        future. Experiences and appreciation gained through activities assist students during internship
-                        and other
-                        sponsored programs.</p>
-                </div>
-            </div>
+            @if($i%2==1)
+            @if (!empty($item->featured_image->file_path))
             <div class="col-md-6 p-0 ">
-                <img src="{{asset('assets/img/learning-1.jpg')}}" class="img-fluid w-100" />
+                <img src="{{asset($item->featured_image->file_path)}}" class="img-fluid w-100" />
             </div>
-        </div>
-
-
-        <div class="row mb-3   ">
-            <div class="col-md-6 ">
-                <img src="{{asset('assets/img/learning-img-2.jpg')}}" class="img-fluid w-100" />
-            </div>
-            <div class="col-md-6  right-light-clr d-flex align-items-center">
+            @endif
+            @endif
+            <div class="col-md-6 @if($i%2==0) left-dark-clr @else right-light-clr @endif d-flex align-items-center">
                 <div>
-                    <h4> Strengthened Self Confidence</h4>
-                    <p> The goal of co-curricular activities is to give better fitness to students and inculcate of
-                        sense of sportsmanship, competitive spirit, leadership, meticulousness, cooperation,
-                        team-spirit. The hidden motive behind all this is to develop self-confidence and to learn to
-                        trust the team </p>
+                    <h4> {{$item->title}}:</h4>
+                    {!!$item->content!!}
+
                 </div>
             </div>
 
+            @if($i%2==0)
+            @if (!empty($item->featured_image->file_path))
+            <div class="col-md-6 p-0 ">
+                <img src="{{asset($item->featured_image->file_path)}}" class="img-fluid w-100" />
+            </div>
+            @endif
+            @endif
         </div>
 
+        @php
+        $i++;
+        $c++;
+        @endphp
+        @endforeach
 
-
-        <div class="row mb-3  ">
-            <div class="col-md-6 left-dark-clr d-flex align-items-center">
-                <div>
-                    <h4> Improved Academic Performance </h4>
-                    <p> Studies have shown that students pursuing hobbies achieved better results in their studies.
-                        Their academic performance goes way up north as they learn to balance their co-curricular
-                        activities with their academic pursuits. They also understand on how to manage their time
-                        efficiently and also increase their interest in the school.</p>
-                </div>
-            </div>
-            <div class="col-md-6  ">
-                <img src="{{asset('assets/img/learning.jpg')}}" class="img-fluid w-100" />
-            </div>
-        </div>
-
-
-        <div class="row mb-3   ">
-            <div class="col-md-6 ">
-                <img src="{{asset('assets/img/learning-img-3.jpg')}}" class="img-fluid w-100" />
-            </div>
-            <div class="col-md-6  right-light-clr d-flex align-items-center">
-                <div>
-                    <h4> Sense of Responsibility</h4>
-                    <p> When students in their early teens are given some responsibility or a task to handle like first
-                        aid or for that matter managing the class painting board, their efficiency to handle such
-                        situations becomes much better. This fosters the sense of responsibility and accountability.
-                    </p>
-                </div>
-            </div>
-
-        </div>
-
-
-
-
-
-        <div class="row mb-3  ">
-            <div class="col-md-6 left-dark-clr d-flex align-items-center">
-                <div>
-                    <h4> Personal growth and development </h4>
-                    <p> Have you ever noticed those children who adorably take care of their friends? How do you think
-                        they started thinking about someone else? Gradually they developed that attitude with time.
-                        However, you can accelerate the learning of this attitude by enrolling your child in
-                        extracurricular activities. In extracurricular activities, they get a chance to be involved in
-                        the group with the peers. Moreover, they learn sharing and caring, all at once.</p>
-                </div>
-            </div>
-            <div class="col-md-6  ">
-                <img src="{{asset('assets/img/learning-img-4.jpg')}}" class="img-fluid w-100" />
-            </div>
-        </div>
-
-
-        <div class="row mb-3   ">
-            <div class="col-md-6 ">
-                <img src="{{asset('assets/img/learning-img-5.jpg')}}" class="img-fluid w-100" />
-            </div>
-            <div class="col-md-6  right-light-clr d-flex align-items-center">
-                <div>
-                    <h4> Improves the confidence and esteem of the students </h4>
-                    <p> Recent studies show that children’s face a lack of confidence when they feel that they are good
-                        at nothing. Not all students can equally score great in the academic work. Similarly, it is
-                        important to make them feel like they are capable of doing something. Academic grades are not
-                        the end of the world. They need to realize that they are talented. This is only possible when
-                        you enroll them in extracurricular activity of their choice. This will not only boost the
-                        self-confidence but also build their esteem. Moreover, working on something of their choice
-                        gives them the opportunity to master their talent. So, the purpose of extracurricular activities
-                        is to bring out the hidden unique talent of the child.</p>
-                </div>
-            </div>
-
-        </div>
-
-
-
-
-
-
+        @endif
 
 
 
