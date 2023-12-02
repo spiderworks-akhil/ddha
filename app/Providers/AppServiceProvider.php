@@ -8,6 +8,7 @@ use App\Models\Setting;
 use App\Models\Listing;
 use Illuminate\Support\Facades\Cache;
 use View;
+use Illuminate\Pagination\Paginator;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -26,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Schema::defaultStringLength(191);
+        Paginator::useBootstrap();
         $common_settings = Cache::get('settings', function () {
             $data = [];
             if (Schema::hasTable('settings')) {

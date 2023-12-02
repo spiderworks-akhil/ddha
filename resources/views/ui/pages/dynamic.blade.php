@@ -15,27 +15,30 @@
 @include('ui.common.header')
 
 
-<section class="about-cnotent inner-page">
+
+<section class="why-content board-list-cnt">
     <div class="container">
-        <div class="row   ">
+        <div class="row d-flex align-items-center">
+            @if (isset($page_details->featured_image->file_path))
             <div class="col-md-5">
-                @if ($page_details->featured_image->file_path)
                 <img src="{{asset($page_details->featured_image->file_path)}}" class="img-fluid w-100" />
-                @endif
             </div>
             <div class="col-md-7">
-                <div class="about-text-cntr clor-1">
+
+                @else
+                <div class="col-md-12">
+
+                    @endif
+
+                    @if (isset($page_details->parent))
                     <span>{{$page_details->parent->title}}</span>
+                    @endif
                     <h3>{{$page_details->title}}</h3>
                     {!!$page_details->content!!}
-
-
                 </div>
             </div>
         </div>
-    </div>
 </section>
-
 
 
 

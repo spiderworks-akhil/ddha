@@ -25,60 +25,22 @@ Route::get('/learning', [MainController::class, 'learning'])->name('learning');
 Route::get('/personalized', [MainController::class, 'personalized'])->name('personalized');
 Route::get('/organic', [MainController::class, 'organic'])->name('organic');
 Route::get('/benefits', [MainController::class, 'benefits'])->name('benefits');
+Route::get('/affiliation-cbse', [MainController::class, 'affiliation_cbse'])->name('affiliation-cbse');
+Route::get('/curriculum', [MainController::class, 'curriculum'])->name('curriculum');
+Route::get('/career-guidance-cell', [MainController::class, 'career_guidance_cell'])->name('career-guidance-cell');
+Route::get('/library', [MainController::class, 'library'])->name('library');
+Route::get('/admission-at-ddha', [MainController::class, 'admission_at_ddha'])->name('admission-at-ddha');
+Route::get('/withdrawal-policy', [MainController::class, 'withdrawal_policy'])->name('withdrawal-policy');
+Route::get('/contact-us', [MainController::class, 'contact'])->name('contact-us');
+Route::get('/blog', [MainController::class, 'blog'])->name('blog');
+Route::get('/blog/{slug?}', [MainController::class, 'blog_view'])->name('blog-view');
 
 
-Route::get('/contact', function () {
-    return view('ui.pages.contact');
-});
-
-Route::get('/blog', function () {
-    return view('ui.pages.blog');
-});
-Route::get('/blog_details', function () {
-    return view('ui.pages.blog_details');
-});  
-
-Route::get('/pastoral_care', function () {
-    return view('ui.pages.pastoral_care');
-});  
-
-Route::get('/health_wellbeing', function () {
-    return view('ui.pages.health_wellbeing');
-});  
-
-Route::get('/security_safety', function () {
-    return view('ui.pages.security_safety');
-});
-
-Route::get('/food_nutrition', function () {
-    return view('ui.pages.food_nutrition');
-});  
 
 
-Route::get('/admission', function () {
-    return view('ui.pages.admission');
-});  
-
-Route::get('/withdrawal_policy', function () {
-    return view('ui.pages.withdrawal_policy');
-});  
-
-Route::get('/affiliation_cbse', function () {
-    return view('ui.pages.affiliation_cbse');
-});  
 
 
-Route::get('/library', function () {
-    return view('ui.pages.library');
-});  
 
-Route::get('/career_guidance_cell', function () {
-    return view('ui.pages.career_guidance_cell');
-});  
-
-Route::get('/curriculum', function () {
-    return view('ui.pages.curriculum');
-});  
 Route::get('/online-registration', function () {
     return view('ui.pages.online-registration');
 });  

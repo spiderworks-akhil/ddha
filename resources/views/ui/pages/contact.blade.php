@@ -1,11 +1,11 @@
 @extends('ui.base')
+@section('metadata')
+<x-meta-data :details="$page_details" />
+@endsection
 @section('head')
 <style>
-
 </style>
 @endsection
-
-
 
 
 
@@ -15,16 +15,16 @@
 @include('ui.common.header')
 
 <section class="about-banner">
-
-  <img src="{{asset('assets/img/banner.jpg')}}" class="img-fluid" />
+  @if ($page_details->banner_image->file_path)
+  <img src="{{asset($page_details->banner_image->file_path)}}" class="img-fluid" />
+  @endif
   <div class="about-banner-text-cntr d-flex align-items-center justify-content-center">
-    <div><span>Contact </span>
-      <h2>Contact Us</h2>
-
+    <div><span>{{$page_details->name}} </span>
+      <h2>{{$page_details->title}}</h2>
     </div>
-
   </div>
 </section>
+
 
 
 <section class="about-cnotent inner-page contact-page ">
@@ -66,18 +66,31 @@
       <div class="col-md-6">
         <h3>Address</h3>
 
-        <p> <strong>Dehradun Hills Academy</strong> <br />
-          Vill. Doodhli -Mothrowala-Doodhli Road Dehradun 248140 </p>
+        {!! $common_settings['contact_address1'] !!}
 
 
-        <p><a><i class="ri-phone-fill"></i> +91-9012377773</a></p>
-        <p><a><i class="ri-mail-line"></i> info@dehradunhillsacademy.co.in </a></p>
+
+        <p><a href="tel:{!! $common_settings['contact_number'] !!}"><i class="ri-phone-fill"></i> {!!
+            $common_settings['contact_number'] !!}</a></p>
+        <p><a href="mailto:{!! $common_settings['contact_email'] !!}"><i class="ri-mail-line"></i> {!!
+            $common_settings['contact_email'] !!}</a></p>
         <p class="social-icon">
-          <a> <i class="ri-facebook-line"></i> </a>
-          <a> <i class="ri-instagram-line"></i> </a>
-          <a> <i class="ri-twitter-fill"></i> </a>
-          <a> <i class="ri-youtube-fill"></i> </a>
-          <a> <i class="ri-linkedin-line"></i> </a>
+          @if (!empty($common_settings['facebook-link']))
+          <a href="{{$common_settings['facebook-link']}}" target="_blank"> <i class="ri-facebook-line"></i>
+          </a>
+          @endif
+          @if (!empty($common_settings['intagram-link']))
+          <a href="{{$common_settings['intagram-link']}}" target="_blank"> <i class="ri-instagram-line"></i> </a>
+          @endif
+          @if (!empty($common_settings['twitter-link']))
+          <a href="{{$common_settings['twitter-link']}}" target="_blank"> <i class="ri-twitter-fill"></i> </a>
+          @endif
+          @if (!empty($common_settings['youtube-link']))
+          <a href="{{$common_settings['youtube-link']}}" target="_blank"> <i class="ri-youtube-fill"></i> </a>
+          @endif
+          @if (!empty($common_settings['linkedin-link']))
+          <a href="{{$common_settings['linkedin-link']}}" target="_blank"> <i class="ri-linkedin-line"></i> </a>
+          @endif
         </p>
 
       </div>
@@ -92,15 +105,12 @@
 
     <div class="row">
       <div class="col-md-12">
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d2175.546014824964!2d78.0689929709142!3d30.19303086649897!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x4bf06e7695e154b4!2sDehradun%20Hills%20Academy%20Boutique%20Residential%20School!5e1!3m2!1sen!2sin!4v1665756894446!5m2!1sen!2sin"
-          width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"></iframe>
+        {!! $common_settings['google_map_embed_code'] !!}
+
       </div>
+
+
     </div>
-
-
-  </div>
 
 
 
