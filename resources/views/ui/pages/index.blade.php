@@ -330,7 +330,7 @@ $content = $page_details->content;
 
 @endif
 
-<section class="home-advatage">
+<section class="home-advatage" id="home-advatage">
   <div class="container">
 
     <div class="row  ">
