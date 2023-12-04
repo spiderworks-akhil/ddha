@@ -63,6 +63,13 @@
                 isset($obj->content['banner_btn_link_5'])) value="{{$obj->content['banner_btn_link_5']}}" @endif > --}}
             </div>
         </div>
+        <div class="form-group col-md-12 ">
+
+            <input type="text" name="content[banner_section_2_title]" class="form-control" @if($obj->content &&
+            isset($obj->content['banner_section_2_title'])) value="{{$obj->content['banner_section_2_title']}}" @endif >
+            <textarea name="content[banner_section_2_description]"
+                class="form-control ">@if($obj->content && isset($obj->content['banner_section_2_description'])) {{$obj->content['banner_section_2_description']}} @endif</textarea>
+        </div>
     </fieldset>
     <h3>Section 2</h3>
     <fieldset>
@@ -81,6 +88,8 @@
                     'popup_type'=>'single_image', 'type'=>'Image', 'holder_attr'=>'content[media_id_section_2_img_1]',
                     'id'=>'media_id_section_2_img_1', 'display'=> 'vertical'])
                 </div>
+                <textarea name="content[section_2_description_1]"
+                    class="form-control ">@if($obj->content && isset($obj->content['section_2_description_1'])) {{$obj->content['section_2_description_1']}} @endif</textarea>
             </div>
             <div class="form-group col-md-6 ">
 
@@ -96,6 +105,8 @@
                     'popup_type'=>'single_image', 'type'=>'Image', 'holder_attr'=>'content[media_id_section_2_img_2]',
                     'id'=>'media_id_section_2_img_2', 'display'=> 'vertical'])
                 </div>
+                <textarea name="content[section_2_description_2]"
+                    class="form-control ">@if($obj->content && isset($obj->content['section_2_description_2'])) {{$obj->content['section_2_description_2']}} @endif</textarea>
             </div>
         </div>
         <div class="row">
@@ -112,6 +123,8 @@
                     'popup_type'=>'single_image', 'type'=>'Image', 'holder_attr'=>'content[media_id_section_2_img_3]',
                     'id'=>'media_id_section_2_img_3', 'display'=> 'vertical'])
                 </div>
+                <textarea name="content[section_2_description_3]"
+                    class="form-control ">@if($obj->content && isset($obj->content['section_2_description_3'])) {{$obj->content['section_2_description_3']}} @endif</textarea>
             </div>
             <div class="form-group col-md-6 ">
 
@@ -127,6 +140,8 @@
                     'popup_type'=>'single_image', 'type'=>'Image', 'holder_attr'=>'content[media_id_section_2_img_4]',
                     'id'=>'media_id_section_2_img_4', 'display'=> 'vertical'])
                 </div>
+                <textarea name="content[section_2_description_4]"
+                    class="form-control ">@if($obj->content && isset($obj->content['section_2_description_4'])) {{$obj->content['section_2_description_4']}} @endif</textarea>
             </div>
         </div>
     </fieldset>

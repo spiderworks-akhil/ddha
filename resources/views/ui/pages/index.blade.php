@@ -83,21 +83,27 @@ $content = $page_details->content;
         @if (!empty($content['banner_btn_link_1']))
         <a href="{{url($content['banner_btn_link_1'])}}" class="btn-1 me-4">{{$content['banner_btn_text_1']}}</a>
         @endif
+
+      </div>
+      <div class="col-md-6 text-end mob-text-center">
+        {{-- <div class="badj badj-clr">{!!$content['banner_btn_text_3']!!}</div>
+        <div class="badj badj-clr2">{!!$content['banner_btn_text_4']!!}</div>
+        <div class="badj badj-clr3">{!!$content['banner_btn_text_5']!!}</div> --}}
         @if (!empty($content['banner_btn_link_2']))
         <a href="{{url($content['banner_btn_link_2'])}}" class="btn-2">{{$content['banner_btn_text_2']}}</a>
         @endif
-      </div>
-      <div class="col-md-6 text-end mob-text-center">
-        <div class="badj badj-clr">{!!$content['banner_btn_text_3']!!}</div>
-        <div class="badj badj-clr2">{!!$content['banner_btn_text_4']!!}</div>
-        <div class="badj badj-clr3">{!!$content['banner_btn_text_5']!!}</div>
       </div>
     </div>
 
   </div>
 </section>
 
-
+<section class="welcome">
+  <div class="container">
+    <h3>{!!$content['banner_section_2_title']??=""!!}</h3>
+    <p>{!!$content['banner_section_2_description']??=""!!}</p>
+  </div>
+</section>
 
 
 <section class="board">
@@ -112,6 +118,9 @@ $content = $page_details->content;
           @if (!empty($content['media_id_section_2_img_1']) && isset($content['media_id_section_2_img_1']->file_path))
           <img src="{{asset($content['media_id_section_2_img_1']->file_path)}}" class="img-fluid" />
           @endif
+          <div class="d-none">
+            <p>{!!$content['section_2_description_1']??=""!!}</p>
+          </div>
         </div>
       </div>
 
@@ -123,6 +132,9 @@ $content = $page_details->content;
           @if (!empty($content['media_id_section_2_img_2']) && isset($content['media_id_section_2_img_2']->file_path))
           <img src="{{asset($content['media_id_section_2_img_2']->file_path)}}" class="img-fluid" />
           @endif
+          <div class="d-none">
+            <p>{!!$content['section_2_description_2']??=""!!}</p>
+          </div>
         </div>
       </div>
 
@@ -134,6 +146,9 @@ $content = $page_details->content;
           @if (!empty($content['media_id_section_2_img_3']) && isset($content['media_id_section_2_img_3']->file_path))
           <img src="{{asset($content['media_id_section_2_img_3']->file_path)}}" class="img-fluid" />
           @endif
+          <div class="d-none">
+            <p>{!!$content['section_2_description_3']??=""!!}</p>
+          </div>
         </div>
       </div>
 
@@ -145,6 +160,9 @@ $content = $page_details->content;
           @if (!empty($content['media_id_section_2_img_4']) && isset($content['media_id_section_2_img_4']->file_path))
           <img src="{{asset($content['media_id_section_2_img_4']->file_path)}}" class="img-fluid" />
           @endif
+          <div class="d-none">
+            <p>{!!$content['section_2_description_4']??=""!!}</p>
+          </div>
         </div>
       </div>
 
