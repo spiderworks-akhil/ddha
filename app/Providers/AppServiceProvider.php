@@ -9,6 +9,7 @@ use App\Models\Listing;
 use Illuminate\Support\Facades\Cache;
 use View;
 use Illuminate\Pagination\Paginator;
+use Validator;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -26,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Validator::extend('recaptcha', 'App\\Validators\\ReCaptcha@validate');
         Schema::defaultStringLength(191);
         Paginator::useBootstrap();
         $common_settings = Cache::get('settings', function () {

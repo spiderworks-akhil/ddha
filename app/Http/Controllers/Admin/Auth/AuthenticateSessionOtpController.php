@@ -53,7 +53,7 @@ class AuthenticateSessionOtpController extends Controller {
                     }
                 }
 
-                $otp = rand(111111,999999);
+                $otp = $this->create_otp();
                 $admin->otp = $otp;
                 $admin->otp_sent_on = date('Y-m-d H:i:s');
                 $admin->save();
@@ -130,7 +130,7 @@ class AuthenticateSessionOtpController extends Controller {
                     }
                 }
 
-                $otp = rand(111111,999999);
+                $$otp = $this->create_otp();
                 $admin->otp = $otp;
                 $admin->otp_sent_on = date('Y-m-d H:i:s');
                 $admin->save();
@@ -141,6 +141,13 @@ class AuthenticateSessionOtpController extends Controller {
                 return response()->json(['success' => true]);
             }
         }
+    }
+
+    protected function create_otp(){
+        if(app()->env == 'production')
+            return rand(111111,999999);
+        else
+            return 123456;
     }
 
 	public function logout(Request $request){

@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 use App\Models\FrontendPage;
 use App\Models\Page;
 use App\Models\Blog;
+use App\Models\Slider;
+use App\Models\Listing;
+use App\Models\Gallery;
+use App\Models\Testimonial;
+use App\Models\Event;
 use DB;
 class MainController extends Controller
 {
@@ -16,8 +21,29 @@ class MainController extends Controller
             $page = FrontendPage::where('slug', 'index')->first();
             return $page;
         });
+
+        $listing_1 = Listing::find(2);
+        $listings_1 =$listing_1->list;
+        $listing_2 = Listing::find(3);
+        $listings_2 =$listing_2->list;
+        $listing_3 = Listing::find(4);
+        $listings_3 =$listing_3->list;
+        $about_slider = Slider::find(1);
+        $about_slider = $about_slider->photos;
+        $gallery = Gallery::where('slug','the-ddha-advantage')->first();
+        $testimonials = Testimonial::where('is_featured',1)->where('comment_type','!=','Text')->take(3)->get();
+        $events = Event::where('status',1)->where('type','Events')->where('end_time','>=',date("h:i:sa"))->take(5)->get();
+        $news = Event::where('status',1)->where('type','News')->where('is_featured',1)->first();
         return view('ui.pages.index',[
-            'page_details' => $home_settings
+            'page_details' => $home_settings,
+            'listings_1'=>$listings_1,
+            'listings_2'=>$listings_2,
+            'listings_3'=>$listings_3,
+            'about_slider'=>$about_slider,
+            'gallery'=>$gallery,
+            'testimonials'=>$testimonials,
+            'news'=>$news,
+            'events'=>$events
         ]);
     }
     public function about(){    
@@ -142,7 +168,7 @@ class MainController extends Controller
             $page = Page::where('slug', 'blog')->first();
             return $page;
         });
-        $blogs = Blog::where('status',1)->paginate(4);
+        $blogs = Blog::where('status',1)->paginate(10);
         return view('ui.pages.blog',[
             'page_details' => $blog_settings,
             'blogs'=>$blogs
@@ -156,6 +182,46 @@ class MainController extends Controller
         return view('ui.pages.blog_details',[
             'page_details' => $blog,
             'blogs'=>$blogs
+        ]);
+    }
+
+    public function news() {
+        $news_settings = Cache::get('news_settings', function () {
+            $page = Page::where('slug', 'news')->first();
+            return $page;
+        });
+        $news = Event::where('status',1)->where('type','News')->paginate(10);
+        return view('ui.pages.news',[
+            'page_details' => $news_settings,
+            'news'=>$news
+        ]);
+    }
+    public function news_view($slug) {
+        if (!$news = Event::where('status',1)->where('type','News')->where('slug',$slug)->first()) {
+            return abort('404');
+        }
+        return view('ui.pages.news_details',[
+            'page_details' => $news
+        ]);
+    }
+
+    public function event() {
+        $event_settings = Cache::get('event_settings', function () {
+            $page = Page::where('slug', 'event')->first();
+            return $page;
+        });
+        $events = Event::where('status',1)->where('type','Events')->paginate(10);
+        return view('ui.pages.event',[
+            'page_details' => $event_settings,
+            'events'=>$events
+        ]);
+    }
+    public function event_view($slug) {
+        if (!$event = Event::where('status',1)->where('type','Events')->where('slug',$slug)->first()) {
+            return abort('404');
+        }
+        return view('ui.pages.event_details',[
+            'page_details' => $event
         ]);
     }
 

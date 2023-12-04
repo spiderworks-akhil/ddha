@@ -1,3 +1,4 @@
+@if (!Route::is('thankyou'))
 <section class="foot-element">
   <div class="container  ">
 
@@ -22,6 +23,7 @@
 
   </div>
 </section>
+@endif
 
 
 

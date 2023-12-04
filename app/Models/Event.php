@@ -22,7 +22,7 @@ class Event extends Model
     protected $table = 'events';
 
 
-    protected $fillable = array('slug', 'name', 'title', 'start_time', 'end_time', 'location', 'fees', 'short_description', 
+    protected $fillable = array('slug', 'name', 'type','title', 'start_time', 'end_time', 'location', 'fees', 'short_description', 
     'content', 'priority', 'featured_image_id', 'banner_image_id', 'browser_title', 'meta_description', 'meta_keywords', 
     'bottom_description', 'og_title', 'og_description', 'og_image_id', 'extra_js', 'category_id', 'is_featured', 'status');
 

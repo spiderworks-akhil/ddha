@@ -1,3 +1,6 @@
+@php
+$content = $page_details->content;
+@endphp
 @extends('ui.base')
 @section('metadata')
 <x-meta-data :details="$page_details" />
@@ -31,27 +34,34 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form class="row g-3">
-
+        <form class="row g-3" id="popup-form" action="{{url('save')}}">
+          <input type="hidden" name="lead_type" value="Home Popup Form">
+          <input type="hidden" name="source_url" value="{{url()->full()}}">
+          @csrf
           <div class="col-md-12">
             <label for="inputPassword4" class="form-label">Name</label>
-            <input type="text" class="form-control" id="inputPassword4">
+            <input type="text" class="form-control" name="name" id="inputPassword4">
           </div>
           <div class="col-md-12">
             <label for="inputEmail4" class="form-label">Email</label>
-            <input type="email" class="form-control" id="inputEmail4">
+            <input type="email" class="form-control" name="email" id="inputEmail4">
           </div>
           <div class="col-md-12">
-            <label for="inputPassword4" class="form-label">Phone Number</label>
-            <input type="text" class="form-control" id="inputPassword4">
+            <label for="phone_number" class="form-label">Phone Number</label>
+            <input type="text" class="form-control" name="phone_number" id="phone_number">
           </div>
           <div class="col-12">
             <label for="inputAddress" class="form-label">Location</label>
-            <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+            <input type="text" class="form-control" name="location" id="inputAddress" placeholder="1234 Main St">
           </div>
 
 
           <div class="col-12">
+            <input type="hidden" name="recaptcha">
+            <p class="recaptcha-text">This site is protected by reCAPTCHA and the Google <a
+                href="https://policies.google.com/privacy">Privacy Policy</a> and <a
+                href="https://policies.google.com/terms">Terms of Service</a> apply.</p>
+
             <button type="submit" class="btn btn-primary">SUBMIT </button>
           </div>
         </form>
@@ -63,19 +73,24 @@
 
 <section class="banner">
   <div class="hapn"><img src="{{asset('assets/img/hap.png')}}" class="img-fluid" /> </div>
-  <img src="{{asset('assets/img/banner.jpg')}}" class="img-fluid banner-img" />
+  @if (!empty($content['media_id_banner_image']) && isset($content['media_id_banner_image']->file_path))
+  <img src="{{asset($content['media_id_banner_image']->file_path)}}" class="img-fluid banner-img" />
+  @endif
   <div class="banner-text-cntr">
     <div class="row d-flex align-items-end">
       <div class="col-md-6">
-        <span>Welcome to</span>
-        <h2>Dehradun Hills Academy</h2>
-        <a class="btn-1 me-4">Admission Open</a>
-        <a class="btn-2">Photo Gallery</a>
+        {!!$content['banner_title']!!}
+        @if (!empty($content['banner_btn_link_1']))
+        <a href="{{url($content['banner_btn_link_1'])}}" class="btn-1 me-4">{{$content['banner_btn_text_1']}}</a>
+        @endif
+        @if (!empty($content['banner_btn_link_2']))
+        <a href="{{url($content['banner_btn_link_2'])}}" class="btn-2">{{$content['banner_btn_text_2']}}</a>
+        @endif
       </div>
       <div class="col-md-6 text-end mob-text-center">
-        <div class="badj badj-clr">CBSE <br />Affiliated</div>
-        <div class="badj badj-clr2">Estd.<br />1990</div>
-        <div class="badj badj-clr3">Personalized<br /> Learning</div>
+        <div class="badj badj-clr">{!!$content['banner_btn_text_3']!!}</div>
+        <div class="badj badj-clr2">{!!$content['banner_btn_text_4']!!}</div>
+        <div class="badj badj-clr3">{!!$content['banner_btn_text_5']!!}</div>
       </div>
     </div>
 
@@ -92,36 +107,44 @@
       <div class="col-md-3 p-0">
         <div class="board-list ">
           <h3 class="board-clr-1 d-flex align-items-center"> <img src="{{asset('assets/img/board-1.png')}}"
-              class="img-fluid" /> Boarding Life <div class="clearfix"></div>
+              class="img-fluid" />{{$content['section_2_text_1']}} <div class="clearfix"></div>
           </h3>
-          <img src="{{asset('assets/img/board--img1.png')}}" class="img-fluid" />
+          @if (!empty($content['media_id_section_2_img_1']) && isset($content['media_id_section_2_img_1']->file_path))
+          <img src="{{asset($content['media_id_section_2_img_1']->file_path)}}" class="img-fluid" />
+          @endif
         </div>
       </div>
 
       <div class="col-md-3 p-0">
         <div class="board-list  ">
           <h3 class="board-clr-2 d-flex align-items-center"> <img src="{{asset('assets/img/board-2.png')}}"
-              class="img-fluid" /> Academics <div class="clearfix"></div>
+              class="img-fluid" /> {{$content['section_2_text_2']}} <div class="clearfix"></div>
           </h3>
-          <img src="{{asset('assets/img/board--img2.png')}}" class="img-fluid" />
+          @if (!empty($content['media_id_section_2_img_2']) && isset($content['media_id_section_2_img_2']->file_path))
+          <img src="{{asset($content['media_id_section_2_img_2']->file_path)}}" class="img-fluid" />
+          @endif
         </div>
       </div>
 
       <div class="col-md-3 p-0">
         <div class="board-list">
           <h3 class="board-clr-3 d-flex align-items-center"> <img src="{{asset('assets/img/board-3.png')}}"
-              class="img-fluid" /> Co-curricular <div class="clearfix"></div>
+              class="img-fluid" /> {{$content['section_2_text_3']}} <div class="clearfix"></div>
           </h3>
-          <img src="{{asset('assets/img/board--img3.png')}}" class="img-fluid" />
+          @if (!empty($content['media_id_section_2_img_3']) && isset($content['media_id_section_2_img_3']->file_path))
+          <img src="{{asset($content['media_id_section_2_img_3']->file_path)}}" class="img-fluid" />
+          @endif
         </div>
       </div>
 
       <div class="col-md-3 p-0">
         <div class="board-list">
           <h3 class="board-clr-4 d-flex align-items-center"> <img src="{{asset('assets/img/board-4.png')}}"
-              class="img-fluid" /> Happiness Advantage <div class="clearfix"></div>
+              class="img-fluid" /> {{$content['section_2_text_4']}} <div class="clearfix"></div>
           </h3>
-          <img src="{{asset('assets/img/board--img4.png')}}" class="img-fluid" />
+          @if (!empty($content['media_id_section_2_img_4']) && isset($content['media_id_section_2_img_4']->file_path))
+          <img src="{{asset($content['media_id_section_2_img_4']->file_path)}}" class="img-fluid" />
+          @endif
         </div>
       </div>
 
@@ -134,9 +157,7 @@
 
 <section class="welcome">
   <div class="container">
-    <h4>Welcome to Dehradun Hills Academy -<br />
-      A Boutique Residential School for Indian & Asian students. </h4>
-    <h5>Ranked #1 in Holistic Education by Education Today 2021-22 </h5>
+    {!!$content['section_3_description']!!}
   </div>
 </section>
 
@@ -147,57 +168,23 @@
 
     <div class="row">
       <div class="col-md-12">
-        <h3>What makes Dehradun Hills Academy Different ?</h3>
+        <h3>{!!$content['section_4_description']!!}</h3>
       </div>
 
+
+
+      @if (!empty($listings_1) && count($listings_1)>0)
+      @foreach ($listings_1 as $item)
       <div class="col-md-3 dif-list">
-        <img src="{{asset('assets/img/dif-1.png')}}" />
-        <h4>Happy</h4>
-        <p>Don't educate your children to be
-          rich. Educate them to be happy. So
-          when they grow up they will know
-          the value of things, not the price. At
-          DDHA we prioritise Happiness
-          above all.
+        @if (!empty($item->media) && isset($item->media->file_path))
+        <img src="{{asset($item->media->file_path)}}" />
+        @endif
+        <h4>{{$item->title}}</h4>
+        <p>{!!$item->description!!}
         </p>
       </div>
-
-      <div class="col-md-3 dif-list">
-        <img src="{{asset('assets/img/dif-2.png')}}" />
-        <h4> Healthy</h4>
-        <p> We at Dehradun Hills Academy
-          teach our kids to EAT REAL
-          FOOD.No fast foods - No junk
-          foods.No processed foods. We
-          try to ensure as much organic
-          foods as possible.
-        </p>
-      </div>
-
-      <div class="col-md-3 dif-list">
-        <img src="{{asset('assets/img/dif-3.png')}}" />
-        <h4>Inspired </h4>
-        <p> Winning doesn't always mean being
-          first. Winning means you are doing
-          better than you have done before. At
-          a small boutique school we take
-          pride in ensuring our kids are always
-          at the forefront.
-        </p>
-      </div>
-
-
-      <div class="col-md-3 dif-list">
-        <img src="{{asset('assets/img/dif-4.png')}}" />
-        <h4> Customized Program </h4>
-        <p> Class 6th to 12th grade student can join us
-          and we help customize their learning program
-          to suit their current and future needs. With
-          over 32+ years of experience the school
-          strives at ensuring each of our student
-          progresses in as many parameters as
-          possible. </p>
-      </div>
+      @endforeach
+      @endif
 
 
 
@@ -211,9 +198,7 @@
 
 <section class="admission">
   <div class="container">
-    <h3>ADMISSIONS OPEN </h3>
-    <p>For Class 1st to IX and XI - Session 2023-24</p>
-    <a href="#">APPLY NOW</a>
+    {!!$content['section_5_description']!!}
   </div>
 </section>
 
@@ -224,36 +209,20 @@
   <div class="container">
     <div class="row d-flex align-items-center">
       <div class="col-md-8">
-        <h3>About us – DDHA </h3>
-        <p>Dehradun Hills Academy is a Boutique Residential K-12 School affiliated to CBSE – India. The
-          campus is located 40 minutes away from the city in a verdant suburb surrounded by pristine
-          mountains, majestic Sal forests and farmlands. </p>
-        <p>30+ years of dedication and passion has brought the school to where it is now. This has made
-          people from various backgrounds to join the team and chart the road to make Dehradun Hills
-          Academy one of its kind schools in Asia. </p>
-        <p> We have a 7 acre campus with tree avenues, open air amphitheater, shaded fruit orchards looking
-          onto a landscape of cultivated fields and pristine forests. We also have a dairy, an organic farm,
-          vegetable garden, organic herb unit, fruit orchards of mango, litchi and pear, in-house vermiculture
-          and composting pits and tree house for daytime observation. </p>
-        <p>We have an upcoming poultry farm, weather station and observatory for amateurs. What is unique
-          to the campus is an In-house Café – 'Silent Temptations' run by students and multiple reading
-          lounges to inculcate the love and habit for reading. </p>
+        {!!$content['section_6_description']!!}
       </div>
       <div class="col-md-4">
         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
           <div class="carousel-inner">
-            <div class="carousel-item active">
-              <img src="{{asset('assets/img/hm-sec1.png')}}" class="img-fluid" />
+            @if (!empty($about_slider) && count($about_slider)>0)
+            @foreach ($about_slider as $item)
+            @if (!empty($item->media) && isset($item->media->file_path))
+            <div class="carousel-item @if($loop->first) active @endif">
+              <img src="{{asset($item->media->file_path)}}" class="img-fluid" />
             </div>
-            <div class="carousel-item">
-              <img src="{{asset('assets/img/hm-sec2.png')}}" class="img-fluid" />
-            </div>
-            <div class="carousel-item">
-              <img src="{{asset('assets/img/hm-sec3.png')}}" class="img-fluid" />
-            </div>
-            <div class="carousel-item">
-              <img src="{{asset('assets/img/hm-sec4.png')}}" class="img-fluid" />
-            </div>
+            @endif
+            @endforeach
+            @endif
           </div>
           <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
             data-bs-slide="prev">
@@ -282,22 +251,13 @@
   <div class="container">
     <div class="row d-flex align-items-center">
       <div class="col-md-4">
-        <img src="{{asset('assets/img/hm-sec.png')}}" class="img-fluid" />
+        @if (!empty($content['media_id_section_7_img_1']) && isset($content['media_id_section_7_img_1']->file_path))
+        <img src="{{asset($content['media_id_section_7_img_1']->file_path)}}" class="img-fluid" />
+        @endif
       </div>
       <div class="col-md-8">
-        <h3>Entirely Personalized: Socially,
-          Emotionally, and Academically </h3>
-        <p>In a Boutique school, the teacher truly gets to know their student
-          and personalises the time table to each individual's strength,
-          interest and above all their learning style. This results in more
-          participation and student engagement and their interest in
-          learning soars when they get the attention, when they are heard
-          and known by their peers and teachers. Also outside the
-          classroom, we help support social growth via various activities
-          and through clubs, field trips and more. Results below through a
-          survey speak for itself.</p>
+        {!!$content['section_7_description']!!}
 
-        <a>How we Personalise</a>
       </div>
 
     </div>
@@ -312,15 +272,16 @@
   <div class="container">
     <div class="row  ">
       <div class="col-md-12">
-        <h3>Student Success is more than Grades </h3>
-        <p>we survey students when they start with us then after attending Dehradun Hills Academy for six
-          months. See our students growth academically, socially, and emotionally: </p>
+        <h3>{!!$content['section_8_text_1']!!}
+        </h3>
+        <p>{!!$content['section_8_description']!!}</p>
       </div>
 
       <div class="col-md-12 d-flex align-items-center justify-content-center">
 
-        <div class=" bef-dha"><i class="ri-checkbox-blank-circle-fill"></i> Before DDHA</div>
-        <div class="af-dha"> <i class="ri-checkbox-blank-circle-fill"></i> After 6 months at DDHA</div>
+        <div class=" bef-dha"><i class="ri-checkbox-blank-circle-fill"></i> {!!$content['section_8_before_text']!!}
+        </div>
+        <div class="af-dha"> <i class="ri-checkbox-blank-circle-fill"></i> {!!$content['section_8_after_text']!!}</div>
 
       </div>
 
@@ -328,21 +289,24 @@
 
     <div class="row  d-flex align-items-center  ">
       <div class="col-md-4">
-        <img src="{{asset('assets/img/gr-1.png')}}" class="img-fluid" />
-        <h4>Student Success is more than Grades </h4>
-        <span>Getting the academic support they need to the be successful
-        </span>
+        @if (!empty($content['media_id_section_8_img_2']) && isset($content['media_id_section_8_img_2']->file_path))
+        <img src="{{asset($content['media_id_section_8_img_2']->file_path)}}" class="img-fluid" />
+        @endif
+        {!!$content['section_8_text_3']!!}
       </div>
 
       <div class="col-md-4">
-        <img src="{{asset('assets/img/gr-2.png')}}" class="img-fluid" />
-        <h4>Social Connection </h4>
+        @if (!empty($content['media_id_section_8_img_1']) && isset($content['media_id_section_8_img_1']->file_path))
+        <img src="{{asset($content['media_id_section_8_img_1']->file_path)}}" class="img-fluid" />
+        @endif
+        <h4>{!!$content['section_8_text_2']!!}</h4>
       </div>
 
       <div class="col-md-4">
-        <img src="{{asset('assets/img/gr-3.png')}}" class="img-fluid" />
-        <h4>Emotional Support </h4>
-        <span>Felt they were receiving the emotional support they needed </span>
+        @if (!empty($content['media_id_section_8_img_3']) && isset($content['media_id_section_8_img_3']->file_path))
+        <img src="{{asset($content['media_id_section_8_img_3']->file_path)}}" class="img-fluid" />
+        @endif
+        {!!$content['section_8_text_4']!!}
       </div>
 
     </div>
@@ -362,7 +326,9 @@
 
 
 
+@if (!empty($gallery) && count($gallery->gallery)>0)
 
+@endif
 
 <section class="home-advatage">
   <div class="container">
@@ -370,93 +336,18 @@
     <div class="row  ">
 
       <div class="col-md-3">
-        <h3>The Ddha <br /> Advantage</h3>
+        <h3>{!!$gallery->title!!}</h3>
       </div>
-
+      @foreach ($gallery->gallery as $item)
       <div class="col-md-3">
         <div class="adva-list">
-          <img src="{{asset('assets/img/ad-1.png')}}" class="img-fluid" />
-          <span>Celebrating Success</span>
+          @if (!empty($item->media) && isset($item->media->file_path))
+          <img src="{{asset($item->media->file_path)}}" class="img-fluid" />
+          <span>{{$item->media->description}}</span>
+          @endif
         </div>
       </div>
-
-      <div class="col-md-3">
-        <div class="adva-list">
-          <img src="{{asset('assets/img/ad-2.png')}}" class="img-fluid" />
-          <span>Pottery Classes </span>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="adva-list">
-          <img src="{{asset('assets/img/ad-3.png')}}" class="img-fluid" />
-          <span> Photography Exhibition</span>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="adva-list">
-          <img src="{{asset('assets/img/ad-4.png')}}" class="img-fluid" />
-          <span> World Art</span>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="adva-list">
-          <img src="{{asset('assets/img/ad-5.png')}}" class="img-fluid" />
-          <span> Kahani - Celebrating Art & Culture</span>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="adva-list">
-          <img src="{{asset('assets/img/ad-6.png')}}" class="img-fluid" />
-          <span>Golf Basics </span>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="adva-list">
-          <img src="{{asset('assets/img/ad-7.png')}}" class="img-fluid" />
-          <span> Exploring the wilderness</span>
-        </div>
-      </div>
-
-
-      <div class="col-md-3">
-        <div class="adva-list">
-          <img src="{{asset('assets/img/ad-8.png')}}" class="img-fluid" />
-          <span>Camping @ DDHA </span>
-        </div>
-      </div>
-
-
-      <div class="col-md-3">
-        <div class="adva-list">
-          <img src="{{asset('assets/img/ad-9.png')}}" class="img-fluid" />
-          <span> Organic Farming - Cabbage Harvesting</span>
-        </div>
-      </div>
-
-
-
-      <div class="col-md-3">
-        <div class="adva-list">
-          <img src="{{asset('assets/img/ad-10.png')}}" class="img-fluid" />
-          <span> Let's Cook Together</span>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="adva-list">
-          <img src="{{asset('assets/img/ad-11.png')}}" class="img-fluid" />
-          <span> Martial Arts Classes</span>
-        </div>
-      </div>
-
-
-
-
+      @endforeach
 
     </div>
 
@@ -478,81 +369,24 @@
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-        <h3>Why DDHA ?</h3>
+        <h3>{!!$content['section_10_text_1']!!}</h3>
       </div>
     </div>
 
     <div class="row">
 
-
-
+      @if (!empty($listings_2) && count($listings_2)>0)
+      @foreach ($listings_2 as $item)
       <div class="col-md-4 why-list">
-        <img src="{{asset('assets/img/why-1.png')}}" class="img-fluid" />
-        <span>30+ years of Legacy </span>
+        @if (!empty($item->media) && isset($item->media->file_path))
+        <img src="{{asset($item->media->file_path)}}" class="img-fluid" />
+        @endif
+        <span>{{$item->title}}</span>
+        <p>{!!$item->description!!}
+        </p>
       </div>
-
-
-
-      <div class="col-md-4 why-list">
-        <img src="{{asset('assets/img/why-1.png')}}" class="img-fluid" />
-        <span>Student Teacher Ratio 8:1 </span>
-      </div>
-
-
-
-
-      <div class=" col-md-4 why-list">
-        <img src="{{asset('assets/img/why-1.png')}}" class="img-fluid" />
-        <span> Private Farm Lands for Vegetables & Fruits </span>
-      </div>
-
-
-
-
-      <div class="col-md-4 why-list">
-        <img src="{{asset('assets/img/why-1.png')}}" class="img-fluid" />
-        <span> Future Ready School </span>
-      </div>
-
-
-
-      <div class="col-md-4 why-list">
-        <img src="{{asset('assets/img/why-1.png')}}" class="img-fluid" />
-        <span> Global Alumni Network </span>
-      </div>
-
-
-
-
-      <div class="col-md-4 why-list">
-        <img src="{{asset('assets/img/why-1.png')}}" class="img-fluid" />
-        <span> Pollution free 7 Acre Safe school </span>
-      </div>
-
-
-
-      <div class="col-md-4 why-list">
-        <img src="{{asset('assets/img/why-1.png')}}" class="img-fluid" />
-        <span> Personalized Learning Experience </span>
-      </div>
-
-
-
-
-      <div class="col-md-4 why-list">
-        <img src="{{asset('assets/img/why-1.png')}}" class="img-fluid" />
-        <span> Organic Lifestyle </span>
-      </div>
-
-
-
-
-      <div class="col-md-4 why-list">
-        <img src="{{asset('assets/img/why-1.png')}}" class="img-fluid" />
-        <span> Among the oldest CBSE school of the region </span>
-      </div>
-
-
+      @endforeach
+      @endif
 
 
     </div>
@@ -571,10 +405,8 @@
 
     <div class="row">
       <div class="col-md-12">
-        <h3>Our Success Stories </h3>
-        <h4>We at Dehradun Hills Academy have served hundreds of happy families for the past 30+ years across India and
-          <br />
-          the world including S.E Asia. Sharing a glimpse of how are Alumni's are placed.
+        <h3>{!!$content['section_11_text_1']!!}</h3>
+        <h4>{!!$content['section_11_description']!!}
         </h4>
       </div>
     </div>
@@ -583,65 +415,20 @@
     <div class="row">
 
 
+      @if (!empty($listings_3) && count($listings_3)>0)
+      @foreach ($listings_3 as $item)
       <div class="col-md-4 col-lg-2">
         <div class="scs-list">
-          <img src="{{asset('assets/img/suc-1.png')}}" class="img-fluid" />
-          <h5>DILEEP RATHORE </h5>
-          <p>Entrepreneur</p>
-          <span>(Batch of 2002) </span>
+          @if (!empty($item->media) && isset($item->media->file_path))
+          <img src="{{asset($item->media->file_path)}}" class="img-fluid" />
+          @endif
+          <h5>{{$item->title}}</h5>
+          <span>{!!$item->description!!}
+          </span>
         </div>
       </div>
-
-
-      <div class="col-md-4 col-lg-2">
-        <div class="scs-list">
-          <img src="{{asset('assets/img/suc-2.png')}}" class="img-fluid" />
-          <h5> RAJESH SINGH </h5>
-          <p>Country Head LG Singapore</p>
-          <span>(Batch of 1999) </span>
-        </div>
-      </div>
-
-
-      <div class="col-md-4 col-lg-2">
-        <div class="scs-list">
-          <img src="{{asset('assets/img/suc-3.png')}}" class="img-fluid" />
-          <h5>SHWETA SHARMA </h5>
-          <span>(Batch of 2000) </span>
-        </div>
-      </div>
-
-
-      <div class="col-md-4 col-lg-2">
-        <div class="scs-list">
-          <img src="{{asset('assets/img/suc-4.png')}}" class="img-fluid" />
-          <h5> YASIN SABRI </h5>
-          <p>Fashion Designer</p>
-          <span>(Batch of 2005) </span>
-        </div>
-      </div>
-
-
-      <div class="col-md-4 col-lg-2">
-        <div class="scs-list">
-          <img src="{{asset('assets/img/suc-5.png')}}" class="img-fluid" />
-          <h5>GAYATRI SINGH</h5>
-          <p>Asia Coordinator Pestalozzi World</p>
-          <span> (Batch of 1998) </span>
-        </div>
-      </div>
-
-      <div class="col-md-4 col-lg-2">
-        <div class="scs-list">
-          <img src="{{asset('assets/img/suc-1.png')}}" class="img-fluid" />
-          <h5> MANIK SHARMA </h5>
-          <p>Global Business Manager Wipro</p>
-          <span>(Batch of 2007) </span>
-        </div>
-      </div>
-
-
-
+      @endforeach
+      @endif
 
     </div>
 
@@ -666,8 +453,7 @@
 
 
 
-
-
+@if (!empty($testimonials) && count($testimonials)>0)
 <section class="home-testi ">
   <div class="container">
 
@@ -675,82 +461,92 @@
       <div class="col-md-8">
 
         <div class="test-vide-cntr">
-          <h3>DDHA Testimonials </h3>
+          <h3>{!!$content['section_12_text_1']!!}</h3>
           <div class="row">
+            @php
+            $testimonial = $testimonials->first();
+            $testimonials = $testimonials->skip(1);
+            @endphp
             <div class="col-md-12">
               <div class="test-video">
-                <img src="{{asset('assets/img/test-3.png')}}" class="img-fluid" />
-                <a class="vid-ply-btn d-flex align-items-center justify-content-center">
+                @if (!empty($testimonial->featured_image) && isset($testimonial->featured_image->file_path))
+                <img src="{{asset($testimonial->featured_image->file_path)}}" class="img-fluid" />
+                @endif
+                <a @if(!empty($testimonial->video) && isset($testimonial->video->file_path))
+                  href="{{asset($testimonial->video->file_path)}}" @else
+                  href="{{$testimonial->youtube_link}}" @endif
+                  class="vid-ply-btn d-flex align-items-center justify-content-center">
                   <i class="ri-play-circle-line"></i>
                 </a>
-                <div class="vid-cap">Parent’s</div>
+                <div class="vid-cap">{{$testimonial->name}}</div>
               </div>
 
             </div>
+            @foreach ($testimonials as $item)
             <div class="col-md-6">
               <div class="test-video test-video2">
-                <img src="{{asset('assets/img/test-1.png')}}" class="img-fluid" />
-                <a class="vid-ply-btn d-flex align-items-center justify-content-center">
+                @if (!empty($item->featured_image) && isset($item->featured_image->file_path))
+                <img src="{{asset($item->featured_image->file_path)}}" class="img-fluid" />
+                @endif
+                <a @if(!empty($item->video) && isset($item->video->file_path))
+                  href="{{asset($item->video->file_path)}}" @else
+                  href="{{$item->youtube_link}}" @endif class="vid-ply-btn d-flex align-items-center
+                  justify-content-center">
                   <i class="ri-play-circle-line"></i>
                 </a>
-                <div class="vid-cap">Student’s</div>
+                <div class="vid-cap">{{$item->name}}</div>
               </div>
 
             </div>
-            <div class="col-md-6">
-              <div class="test-video test-video3">
-                <img src="{{asset('assets/img/test-2.png')}}" class="img-fluid" />
-                <a class="vid-ply-btn d-flex align-items-center justify-content-center">
-                  <i class="ri-play-circle-line"></i>
-                </a>
-                <div class="vid-cap">Student’s</div>
-              </div>
+            @endforeach
 
-            </div>
           </div>
         </div>
       </div>
 
       <div class="col-md-4">
-        <form class="row  ">
+        <form class="row " id="main-form" action="{{url('save')}}">
+          <input type="hidden" name="lead_type" value="Home Admissions Form">
+          <input type="hidden" name="source_url" value="{{url()->full()}}">
+          @csrf
           <h4>Admissions open 2023</h4>
           <div class="col-md-12">
-            <input type="text" class="form-control" placeholder="Enter Name *">
+            <input type="text" class="form-control" name="name" placeholder="Enter Name *">
           </div>
           <div class="col-md-12">
-            <input type="email" class="form-control" placeholder="Enter Email Address *">
+            <input type="email" class="form-control" name="email" placeholder="Enter Email Address *">
           </div>
           <div class="col-md-2 col-3 pe-0">
-            <input type="text" class="form-control" value="+91">
+            <input type="text" class="form-control" name="country" value="+91">
           </div>
           <div class="col-md-10 col-9">
-            <input type="text" class="form-control" placeholder="Enter Mobile Number*">
+            <input type="text" class="form-control" name="phone_number" placeholder="Enter Mobile Number*">
           </div>
           <div class="col-12">
-            <input type="text" class="form-control" placeholder="Select State*">
-          </div>
-
-          <div class="col-12">
-            <input type="text" class="form-control" placeholder="Select City*">
+            <input type="text" class="form-control" name="state" placeholder="Enter State*">
           </div>
 
           <div class="col-12">
-            <input type="text" class="form-control" placeholder="Select Class*">
+            <input type="text" class="form-control" name="city" placeholder="Enter City*">
+          </div>
+
+          <div class="col-12">
+            <input type="text" class="form-control" name="class" placeholder="Enter Class*">
           </div>
 
 
-          <div class="col-md-6">
+          {{-- <div class="col-md-6">
             <input type="text" class="form-control" placeholder="Enter text as shown">
           </div>
           <div class="col-md-6">
             <input type="text" class="form-control">
-          </div>
+          </div> --}}
 
 
 
           <div class="col-12">
             <div class="form-check">
-              <input class="form-check-input" type="checkbox" id="gridCheck">
+              <input class="form-check-input" name="receive_information" type="checkbox" id="gridCheck">
               <label class="form-check-label" for="gridCheck">
                 I agree to receive information regarding my submitted enquiry by signing up on DDHA’S School*
 
@@ -758,6 +554,11 @@
             </div>
           </div>
           <div class="col-12 text-center">
+            <input type="hidden" name="recaptcha">
+            <p class="recaptcha-text">This site is protected by reCAPTCHA and the Google <a
+                href="https://policies.google.com/privacy">Privacy Policy</a> and <a
+                href="https://policies.google.com/terms">Terms of Service</a> apply.</p>
+
             <button type="submit" class="btn  "> Enquiry Now </button>
           </div>
         </form>
@@ -772,6 +573,7 @@
 
   </div>
 </section>
+@endif
 
 
 
@@ -780,58 +582,42 @@
   <div class="container">
 
     <div class="row">
+      @if (!empty($news))
       <div class="col-md-6">
         <h3>Latest News</h3>
         <div class="news-cntr">
-          <img src="{{asset('assets/img/news-2.jpg')}}" class="img-fluid" />
-          <h4>New Faces, News Roles, New Heights</h4>
-          <a>View More News <i class="ri-arrow-right-line"></i></a>
+          @if (!empty($news->featured_image) && isset($news->featured_image->file_path))
+          <img src="{{asset($news->featured_image->file_path)}}" class="img-fluid" />
+          @endif
+          <h4>{{$news->title}}</h4>
+          <a href="{{url('news/'.$news->slug)}}">View More <i class="ri-arrow-right-line"></i></a>
         </div>
       </div>
+      @endif
+      @if (!empty($events) && count($events)>0)
       <div class="col-md-6 d-flex justify-content-end text-end">
         <div>
           <h3>Upcoming Events</h3>
           <div class="event-cntr ">
+            @foreach ($events as $item)
+            <a href="{{url('event/'.$item->slug)}}" class="d-flex align-items-center">
+              <span>{{date('M d ', strtotime($item->start_time))}}
+              </span>
+              <h5>{{$item->title}}</h5>
+            </a>
+            <hr />
+            @endforeach
 
-            <a class="d-flex align-items-center">
-              <span>Sep <br />20
-              </span>
-              <h5>Sustaining a welcoming
-                and Inclusive Parent Community</h5>
-            </a>
-            <hr />
-            <a class="d-flex align-items-center">
-              <span>Sep <br />20
-              </span>
-              <h5>Open House</h5>
-            </a>
-            <hr />
-            <a class="d-flex align-items-center">
-              <span>Sep <br />20
-              </span>
-              <h5>Children Parent Social</h5>
-            </a>
-            <hr />
-            <a class="d-flex align-items-center">
-              <span>Sep <br />20
-              </span>
-              <h5>Fall Family Friday</h5>
-            </a>
-            <hr />
-            <a class="d-flex align-items-center">
-              <span>Sep <br />20
-              </span>
-              <h5> Fall Break Begins </h5>
-            </a>
-            <hr />
             <div class="d-flex align-items-center">
-              <a class="view-more-evt">View More Events <i class="ri-arrow-right-line"></i> </a>
+              <a href="{{url('event')}}" class="view-more-evt">View More Events <i class="ri-arrow-right-line"></i> </a>
             </div>
 
 
           </div>
         </div>
       </div>
+      @endif
+
     </div>
   </div>
 
@@ -852,13 +638,213 @@
 @section('bottom')
 <script type="text/javascript">
   $(document).ready(function() {
-   
-   
-    
-         
+  
    $('#exampleModal').modal('show');
 
+   get_recaptcha();
+    setInterval(get_recaptcha, 60000);
+   
+    $.validator.addMethod("phonenu", function(value, element) {
+                    if (value == '')
+                        return true;
+                    var regexPattern = new RegExp(/^[0-9-+ ]+$/);
+                    if (value.length >= 8 && value.length <= 15) {
+                        if (regexPattern.test(value)) {
+                            return true;
+                        } else {
+                            return false;
+                        };
+                    } else
+                        return false;
+                }, "Invalid phone number");
 
-    }); 
+
+    $("#popup-form").validate({
+    
+    rules: {
+        name: "required",
+        message: "required",
+        phone_number: {
+            required: true,
+            phonenu: true,
+        },
+        email: {
+            required: true,
+            email: true,
+        },
+        location:"required",
+   
+
+
+    },
+    messages: {
+        name: "Please enter your name",
+        message: "Please enter a message ",
+        phone_number: {
+            required: "Please enter Phone number"
+        },
+        email: {
+            required: "Please enter email address",
+            email: "Please enter a valid email address."
+        },
+        location:"Please enter location",
+
+    },
+    errorPlacement: function(error, element) {
+        $(element).parent('form').next('.error').remove();
+        error.addClass('text-danger m-0').insertAfter($(element));
+    },
+    submitHandler: function(form) {
+        var btn = $('#' + form.id).find('button');
+        var btn_text = btn.html();
+        btn.prop('disabled', true).html('PROCESSING...');
+        var formurl = form.action;
+        $.ajax({
+            url: formurl,
+            type: "POST",
+            data: new FormData($('#' + form.id)[0]),
+            cache: false,
+            processData: false,
+            contentType: false,
+            success: function(data) {
+                $('#contact-processing').hide();
+                $('#contact_btn').prop('disabled', false).html(btn_text);
+                get_recaptcha();
+
+                if (typeof data.errors != "undefined") {
+                    var errors = JSON.parse(JSON.stringify(data.errors))
+                    $.each(errors, function(key, val) {
+                        $("#" + key + "_contact_error").html(val);
+                    });
+                } else {
+                    $(".error").remove();
+                    $('#' + form.id)[0].reset();
+
+                    var url = "{{url('/')}}";
+                    var currPage = "contact";
+                    url += "/thankyou?type=" + data.type;
+                    window.location = url
+                }
+            },
+            error: function(xhr) {
+                get_recaptcha();
+                btn.prop('disabled', false).html(btn_text);
+                var errors = $.parseJSON(xhr.responseText);
+                $.each(errors, function(key, val) {
+                    $("#" + key + "_contact_error").text(val);
+                });
+            }
+        });
+    }
+});
+
+
+  $("#main-form").validate({
+    
+    rules: {
+        name: "required",
+        message: "required",
+        phone_number: {
+            required: true,
+            phonenu: true,
+        },
+        email: {
+            required: true,
+            email: true,
+        },
+        state:"required",
+        city:"required",
+        class:"required",
+        receive_information:"required",
+
+
+    },
+    messages: {
+        name: "Please enter your name",
+        message: "Please enter a message ",
+        phone_number: {
+            required: "Please enter Phone number"
+        },
+        email: {
+            required: "Please enter email address",
+            email: "Please enter a valid email address."
+        },
+        state:"Please enter state",
+        city:"Please enter city",
+        class:"Please enter class",
+        receive_information:"Please check this",
+
+    },
+    errorPlacement: function(error, element) {
+        $(element).parent('form').next('.error').remove();
+        error.addClass('text-danger m-0').insertAfter($(element));
+    },
+    submitHandler: function(form) {
+        var btn = $('#' + form.id).find('button');
+        var btn_text = btn.html();
+        btn.prop('disabled', true).html('PROCESSING...');
+        var formurl = form.action;
+        $.ajax({
+            url: formurl,
+            type: "POST",
+            data: new FormData($('#' + form.id)[0]),
+            cache: false,
+            processData: false,
+            contentType: false,
+            success: function(data) {
+                $('#contact-processing').hide();
+                $('#contact_btn').prop('disabled', false).html(btn_text);
+                get_recaptcha();
+
+                if (typeof data.errors != "undefined") {
+                    var errors = JSON.parse(JSON.stringify(data.errors))
+                    $.each(errors, function(key, val) {
+                        $("#" + key + "_contact_error").html(val);
+                    });
+                } else {
+                    $(".error").remove();
+                    $('#' + form.id)[0].reset();
+
+                    var url = "{{url('/')}}";
+                    var currPage = "contact";
+                    url += "/thankyou?type=" + data.type;
+                    window.location = url
+                }
+            },
+            error: function(xhr) {
+                get_recaptcha();
+                btn.prop('disabled', false).html(btn_text);
+                var errors = $.parseJSON(xhr.responseText);
+                $.each(errors, function(key, val) {
+                    $("#" + key + "_contact_error").text(val);
+                });
+            }
+        });
+    }
+});
+   
+    
+   
+   
+   
+      });
+      var get_recaptcha = function() {
+                grecaptcha.ready(function() {
+                    grecaptcha.execute("{{config('services.recaptcha.sitekey')}}", {
+                        action: 'validate_captcha'
+                    }).then(function(token) {
+                        if (token) {
+                            var recaptchaElements = document.getElementsByName('recaptcha');
+                            for (var i = 0; i < recaptchaElements.length; i++) {
+                                recaptchaElements[i].value = token;
+                            }
+    
+                            //document.getElementById('recaptcha').value = token;
+                        }
+                    });
+                });
+            }
+
+
 </script>
 @endsection

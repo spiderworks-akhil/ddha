@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Ui\MainController;
+use App\Http\Controllers\Ui\FormController;
 
 
 /*
@@ -34,17 +35,20 @@ Route::get('/withdrawal-policy', [MainController::class, 'withdrawal_policy'])->
 Route::get('/contact-us', [MainController::class, 'contact'])->name('contact-us');
 Route::get('/blog', [MainController::class, 'blog'])->name('blog');
 Route::get('/blog/{slug?}', [MainController::class, 'blog_view'])->name('blog-view');
+Route::get('/news', [MainController::class, 'news'])->name('news');
+Route::get('/news/{slug?}', [MainController::class, 'news_view'])->name('news-view');
+Route::get('/event', [MainController::class, 'event'])->name('event');
+Route::get('/event/{slug?}', [MainController::class, 'event_view'])->name('event-view');
 
-
-
-
-
+Route::post('save', [FormController::class, 'save'])->name('save');
 
 
 Route::get('/online-registration', function () {
     return view('ui.pages.online-registration');
 });  
-
+Route::get('/thankyou', function () {
+    return view('ui.pages.thankyou');
+})->name('thankyou');  
 
 
 Route::get('/dashboard', function () {
