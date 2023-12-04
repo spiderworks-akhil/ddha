@@ -19,7 +19,11 @@
 
       {!! $common_settings['other_common_scripts'] !!}
 
-
+      <style>
+            .grecaptcha-badge {
+                  display: none !important;
+            }
+      </style>
 </head>
 
 <body>
