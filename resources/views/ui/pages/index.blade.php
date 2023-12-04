@@ -72,7 +72,7 @@ $content = $page_details->content;
 </div>
 
 <section class="banner">
-  <div class="hapn"><img src="{{asset('assets/img/hap.png')}}" class="img-fluid" /> </div>
+  {{-- <div class="hapn"><img src="{{asset('assets/img/hap.png')}}" class="img-fluid" /> </div> --}}
   @if (!empty($content['media_id_banner_image']) && isset($content['media_id_banner_image']->file_path))
   <img src="{{asset($content['media_id_banner_image']->file_path)}}" class="img-fluid banner-img" />
   @endif
