@@ -78,7 +78,82 @@ class FormController extends Controller
             $data['extra_data'] = array_merge($extra_data['address'], $data['extra_data']); 
         }
         
-
+        if (isset($request->session)) {
+            $extra_data['session'] =  ['session'=> $request->session];
+            $data['extra_data'] = array_merge($extra_data['session'], $data['extra_data']); 
+        }
+        if (isset($request->Enrollment_of_our_Child_in_Grade)) {
+            $extra_data['Enrollment_of_our_Child_in_Grade'] =  ['Enrollment_of_our_Child_in_Grade'=> $request->address];
+            $data['extra_data'] = array_merge($extra_data['Enrollment_of_our_Child_in_Grade'], $data['extra_data']); 
+        }
+        if (isset($request->gender)) {
+            $extra_data['gender'] =  ['gender'=> $request->gender];
+            $data['extra_data'] = array_merge($extra_data['gender'], $data['extra_data']); 
+        }
+        if (isset($request->d_o_b)) {
+            $extra_data['d_o_b'] =  ['d_o_b'=> $request->d_o_b];
+            $data['extra_data'] = array_merge($extra_data['d_o_b'], $data['extra_data']); 
+        }
+        if (isset($request->parents_name)) {
+            $extra_data['parents_name'] =  ['parents_name'=> $request->parents_name];
+            $data['extra_data'] = array_merge($extra_data['parents_name'], $data['extra_data']); 
+        }
+        if (isset($request->occupation)) {
+            $extra_data['occupation'] =  ['occupation'=> $request->occupation];
+            $data['extra_data'] = array_merge($extra_data['occupation'], $data['extra_data']); 
+        }
+        if (isset($request->city)) {
+            $extra_data['city'] =  ['city'=> $request->city];
+            $data['extra_data'] = array_merge($extra_data['city'], $data['extra_data']); 
+        }
+        if (isset($request->state)) {
+            $extra_data['state'] =  ['address'=> $request->state];
+            $data['extra_data'] = array_merge($extra_data['state'], $data['extra_data']); 
+        }
+        if (isset($request->nationality)) {
+            $extra_data['nationality'] =  ['nationality'=> $request->nationality];
+            $data['extra_data'] = array_merge($extra_data['nationality'], $data['extra_data']); 
+        }
+        if (isset($request->_country)) {
+            $extra_data['Country'] =  ['Country'=> $request->_country];
+            $data['extra_data'] = array_merge($extra_data['Country'], $data['extra_data']); 
+        }
+        if (isset($request->last_school_attended)) {
+            $extra_data['last_school_attended'] =  ['last_school_attended'=> $request->last_school_attended];
+            $data['extra_data'] = array_merge($extra_data['last_school_attended'], $data['extra_data']); 
+        }
+        if (isset($request->present_class)) {
+            $extra_data['present_class'] =  ['present_class'=> $request->present_class];
+            $data['extra_data'] = array_merge($extra_data['present_class'], $data['extra_data']); 
+        }
+        if (isset($request->siblings)) {
+            $extra_data['siblings'] =  ['Country'=> $request->siblings];
+            $data['extra_data'] = array_merge($extra_data['siblings'], $data['extra_data']); 
+        }
+        if (isset($request->gender_2)) {
+            $extra_data['gender_2'] =  ['gender_2'=> $request->gender_2];
+            $data['extra_data'] = array_merge($extra_data['gender_2'], $data['extra_data']); 
+        }
+        if (isset($request->age_2)) {
+            $extra_data['age_2'] =  ['age_2'=> $request->age_2];
+            $data['extra_data'] = array_merge($extra_data['age_2'], $data['extra_data']); 
+        }
+        if (isset($request->class)) {
+            $extra_data['class'] =  ['gender_2'=> $request->class];
+            $data['extra_data'] = array_merge($extra_data['class'], $data['extra_data']); 
+        }
+        if (isset($request->Aryan_Parent__Name_of_the_child)) {
+            $extra_data['Aryan_Parent__Name_of_the_child'] =  ['Aryan_Parent__Name_of_the_child'=> $request->Aryan_Parent__Name_of_the_child];
+            $data['extra_data'] = array_merge($extra_data['Aryan_Parent__Name_of_the_child'], $data['extra_data']); 
+        }
+        if (isset($request->Contact_No_of_the_Parent)) {
+            $extra_data['Contact_No_of_the_Parent'] =  ['Contact_No_of_the_Parent'=> $request->Contact_No_of_the_Parent];
+            $data['extra_data'] = array_merge($extra_data['Contact_No_of_the_Parent'], $data['extra_data']); 
+        }
+        if (isset($request->relative_phone_number)) {
+            $extra_data['relative_phone_number'] =  ['relative_phone_number'=> $request->relative_phone_number];
+            $data['extra_data'] = array_merge($extra_data['relative_phone_number'], $data['extra_data']); 
+        }
 
         if (isset($data['extra_data']))
             $data['extra_data'] = json_encode($data['extra_data']);

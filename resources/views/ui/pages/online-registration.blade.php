@@ -47,16 +47,18 @@
             @csrf
             <div class="col-md-12">
               <label for="inputPassword4" class="form-label">Session</label>
-              <select id="inputState" class="form-select">
-                <option selected>Session...</option>
-                <option>...</option>
+              <select id="inputState" name="session" class="form-select">
+                <option value="" selected>Session...</option>
+                <option>Option 1</option>
+                <option>Option 2</option>
               </select>
             </div>
             <div class="col-md-12">
               <label for="inputPassword4" class="form-label">Enrollment of our Child in Grade *</label>
-              <select id="inputState" class="form-select">
-                <option selected>select...</option>
-                <option>...</option>
+              <select id="inputState" name="Enrollment_of_our_Child_in_Grade" class="form-select">
+                <option value="" selected>select...</option>
+                <option>Option 1</option>
+                <option>Option 2</option>
               </select>
             </div>
 
@@ -171,14 +173,14 @@
 
             <div class="col-md-4">
               <label for="inputEmail4" class="form-label"> Gender</label>
-              <input type="text" class="form-control" id="inputEmail4">
+              <input type="text" name="gender_2" class="form-control" id="inputEmail4">
             </div>
 
 
 
             <div class="col-md-4">
               <label for="inputEmail4" class="form-label"> Age </label>
-              <input type="text" class="form-control" name="age" id="inputEmail4">
+              <input type="text" class="form-control" name="age_2" id="inputEmail4">
             </div>
 
 
@@ -196,20 +198,20 @@
 
             <div class="col-md-6">
               <label for="inputEmail4" class="form-label"> Aryan Parent – Name of the child: </label>
-              <input type="text" class="form-control" id="inputEmail4">
+              <input type="text" name="Aryan_Parent__Name_of_the_child" class="form-control" id="inputEmail4">
             </div>
 
 
             <div class="col-md-6">
               <label for="inputEmail4" class="form-label"> Contact No. of the Parent </label>
-              <input type="text" class="form-control" id="inputEmail4">
+              <input type="text" name="Contact_No_of_the_Parent" class="form-control" id="inputEmail4">
             </div>
 
 
 
             <div class="col-md-6">
               <label for="inputEmail4" class="form-label"> Friends/Relative (phone) </label>
-              <input type="text" class="form-control" id="inputEmail4">
+              <input type="text" name="relative_phone_number" class="form-control" id="inputEmail4">
             </div>
 
 
