@@ -167,10 +167,10 @@ class FormController extends Controller
         $support->save();
         
         
-        
+        $this->email_addesss($support, $data);
+
         
         try {
-            $this->email_addesss($support, $data);
         } catch (Throwable $e) {
             //code to handle the exception
         }

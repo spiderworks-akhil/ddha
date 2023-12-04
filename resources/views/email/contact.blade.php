@@ -8,7 +8,7 @@
             <tbody>
                 <tr>
                     @php
-                    $extra_data = json_decode($data->extra_data);
+                    $extra_data = json_decode($data->extra_data,true);
 
                     $replace_keys = ['d_o_b'=>'date of birth'];
                     $remove_keys = ['id','created_at','updated_at','deleted_at'];
